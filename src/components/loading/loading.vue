@@ -15,8 +15,11 @@
   width: 60px;
   height: 60px;
   background: none;
-  position: relative;
-  margin: 100px auto;
+  position: absolute;
+  top:50%; left:50%;
+  margin-top:-30px;
+  margin-left:-30px;
+  z-index: 999;
 }
 
 .double-bounce1, .double-bounce2 {

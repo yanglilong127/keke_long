@@ -9,16 +9,18 @@ const less=require('gulp-less');
 const cssnano=require('gulp-cssnano');  //压缩css
 const postcss=require('gulp-postcss');
 const autoprefixer=require('autoprefixer'); //自动加前缀
-gulp.task('indexcss',function(){
+gulp.task('maincss',function(){
+    /**
     var plugins = [
         autoprefixer({browsers: ['last 1 version']})
     ]; 
-    gulp.src('./dist/assets/css/index.css')
+    gulp.src('./dist/assets/css/main.css')
     .pipe(less())  //less语法编译
     .pipe(postcss(plugins))
     .pipe(gulp.dest('./dist/css'))
-    //.pipe(cssnano())
+    //.pipe(cssnano())***/
     //改变后刷新
+    gulp.src('./dist/assets/css/main.css')
     .pipe(browserSync.reload({stream:true}));   
 });
 
@@ -44,6 +46,11 @@ gulp.task('image',function(){
     .pipe(gulp.dest('./dist/assets/images'))
     .pipe(browserSync.reload({stream:true}));
 });
+gulp.task('mp3',function(){
+    gulp.src('./src/assets/mp3/*.*')
+    .pipe(gulp.dest('./dist/assets/mp3'))
+    .pipe(browserSync.reload({stream:true}));
+});
 
 //将xml文件复制
 gulp.task('xml',function(){
@@ -59,7 +66,7 @@ gulp.task('product',function(){
 });**/
 
 // Static server
-gulp.task('default',function() {
+gulp.task('default',['image','mp3'],function() {
     /***自动开启浏览器，多屏共享*****/
     browserSync.init({
         server: {
@@ -75,7 +82,7 @@ gulp.task('default',function() {
     gulp.watch('./dist/assets/*.html',['html']);
     gulp.watch('./dist/assets/js/*.js',['js']);
     
-    gulp.watch('./dist/assets/css/index.css',['indexcss']);
+    gulp.watch('./dist/assets/css/main.css',['maincss']);
    
     /******/
 });

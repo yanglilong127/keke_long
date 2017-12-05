@@ -9,9 +9,10 @@ const ExtractCSS=new ExtractTextPlugin({filename:'assets/css/[name].css'});
 module.exports = {
   entry: {
     main:path.join(__dirname,'src/main.js'),
-    swipe:path.join(__dirname,'src/assets/js/swipe.js'),
-    font:path.join(__dirname,'src/assets/js/font.js'),
-    jquery:path.join(__dirname,'src/assets/js/jquery-3.2.1.min.js')
+    swiper:path.join(__dirname,'src/assets/js/swiper.min.js'),
+    jquery:path.join(__dirname,'src/assets/js/jquery-3.2.1.min.js'),
+    viewer:path.join(__dirname,'src/assets/js/viewer.js'),
+    lozad:path.join(__dirname,'src/assets/js/lozad.min.js')
   },
   output: {
     path:path.join(__dirname,'dist'),
@@ -23,20 +24,19 @@ module.exports = {
       {
         test: /\.css$/,
         use:ExtractCSS.extract([
-          'vue-style-loader',
           'css-loader',
           {
-            loader:'postcss-loader',
-            options: {
-                      postcss: function(){
-                          return [
-                              require("autoprefixer")({
-                                  browsers: ['ie>=8','>1% in CN']
-                              })
-                          ]
-                      }
-                  }
-          }
+						loader:'postcss-loader',
+						options: {
+			                postcss: function(){
+			                    return [
+			                        require("autoprefixer")({
+			                            browsers: ['ie>=8','>1% in CN']
+			                        })
+			                    ]
+			                }
+			            }
+					}
         ]),
       },      {
         test: /\.vue$/,
@@ -79,6 +79,8 @@ module.exports = {
       vuex:path.join(__dirname,'node_modules/vuex/dist/vuex.min.js'),
       axios:path.join(__dirname,'node_modules/axios/dist/axios.min.js'),
       jquery:path.join(__dirname,'src/assets/js/jquery-3.2.1.min.js'),
+      bootstrapcss:path.join(__dirname,'src/assets/css/bootstrap.css'),
+      mint_ui_css:path.join(__dirname,'src/assets/css/mint-ui.min.css')
     },
     extensions: ['*', '.js', '.vue', '.json']
   },
@@ -88,9 +90,9 @@ module.exports = {
       filename:'index.html',
       template:path.join(__dirname,'src/index.html'),
       inject:true,
-      chunks:['swipe','font','jquery','main'],
+      chunks:['swiper','jquery','lozad','viewer','main'],
       chunksSortMode: function (chunk1, chunk2) {
-        var order = ['swipe','font','jquery','main'];
+        var order = ['swiper','jquery','lozad','viewer','main'];
         var order1 = order.indexOf(chunk1.names[0]);
         var order2 = order.indexOf(chunk2.names[0]);
         return order1 - order2;  
